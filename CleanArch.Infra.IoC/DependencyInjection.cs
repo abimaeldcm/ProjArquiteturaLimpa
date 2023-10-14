@@ -9,7 +9,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace CleanArch.Infra.Data
+namespace CleanArch.Infra.IoC
 {
     public static class DependencyInjection
     {
