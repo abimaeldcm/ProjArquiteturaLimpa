@@ -1,0 +1,41 @@
+﻿@model IEnumerable<CleanArch.Application.ViewModels.ProductViewModel>
+
+@{
+    ViewData["Title"] = "Products Management";
+}
+
+<style>
+    .modal-lg {
+        max-width: 80%;
+    }
+</style>
+
+<div>
+    <h2>@ViewData["Title"]</h2>
+</div>
+<hr />
+
+<table class="table">
+    <thead>
+        <tr>
+            <th scope="col">#</th>
+            <th scope="col">First</th>
+            <th scope="col">Last</th>
+            <th scope="col">Handle</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <th scope="row">1</th>
+                <td>@item.Name</td>
+                <td>@item.Description</td>
+                <td>@item.Price</td>
+               
+            </tr>
+        }
+
+
+    </tbody>
+</table>
