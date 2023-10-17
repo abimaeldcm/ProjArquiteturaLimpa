@@ -16,9 +16,9 @@ namespace CleanArch.Infra.Data.Repositories
         {
             _context = context;
         }
-        public async Task<Product> GetById(int? id)
+        public Product GetById(int? id)
         {
-            return await _context.Products.SingleOrDefaultAsync(x => x.Id == id);             
+            return _context.Products.SingleOrDefault(x => x.Id == id);             
         }
 
         public async Task<IEnumerable<Product>> GetProducts()
@@ -35,12 +35,10 @@ namespace CleanArch.Infra.Data.Repositories
             _context.Update(product);
             _context.SaveChanges(); ;
         }
-        public  async Task Delete(int id)
+        public void Delete(Product product)
         {
-            var product = await GetById(id);
-
             _context.Remove(product);
-            await _context.SaveChangesAsync();
+            _context.SaveChanges();
         }
     }
 }

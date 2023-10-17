@@ -11,19 +11,19 @@ namespace CleanArch.Application.ViewModels
     public class ProductViewModel
     {
         public int Id { get; set; }
-        [Required(ErrorMessage ="The name is required")]
+        /*[Required(ErrorMessage ="The name is required")]
         [MinLength(3)]
         [MaxLength(50)]
-        [DisplayName("Name")]
+        [DisplayName("Name")]*/
         public string Name { get; set; }
-        [Required(ErrorMessage = "The description is required")]
+        /*[Required(ErrorMessage = "The description is required")]
         [MinLength(5)]
         [MaxLength(200)]
-        [DisplayName("Description")]
+        [DisplayName("Description")]*/
         public string Description { get; set; }
-        [Required(ErrorMessage = "The Price is required")]
+        /*[Required(ErrorMessage = "The Price is required")]
         [Range(0.1,9999.99)]
-        [DisplayName("Description")]
+        [DisplayName("Description")]*/
         public decimal Price { get; set; }
     }
 }

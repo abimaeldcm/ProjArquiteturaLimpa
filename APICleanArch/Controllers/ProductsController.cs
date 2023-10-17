@@ -1,5 +1,6 @@
 ﻿using CleanArch.Application.Interfaces;
 using CleanArch.Application.ViewModels;
+using FluentValidation;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
@@ -12,10 +13,13 @@ namespace Sistema_escolar.Controllers
     public class ProductsController : ControllerBase
     {
         private readonly IProductService _productService;
+        private readonly IValidator<ProductViewModel> _productValidator;
 
-        public ProductsController(IProductService productService)
+        public ProductsController(IProductService productService,
+            IValidator<ProductViewModel> productValidator)
         {
             _productService = productService;
+            _productValidator = productValidator;
         }
 
         [HttpGet]
@@ -26,10 +30,10 @@ namespace Sistema_escolar.Controllers
             return Ok(products);
         }
 
-        [HttpGet("{Id}")]
-        public async Task<ActionResult<ProductViewModel>> BuscarPorId(int id)
+        [HttpGet("{id}")]
+        public ActionResult<ProductViewModel> BuscarPorId(int id)
         {
-            ProductViewModel produto = await _productService.GetById(id);
+            ProductViewModel produto = _productService.GetById(id);
             return Ok(produto);
         }
         [HttpPost]
@@ -37,6 +41,11 @@ namespace Sistema_escolar.Controllers
         {
             try
             {
+                var validationResult = _productValidator.Validate(productDTO);
+                if (!validationResult.IsValid)
+                {
+                    return BadRequest(validationResult.Errors);
+                }
                 _productService.Add(productDTO);
                 return Ok();
             }
