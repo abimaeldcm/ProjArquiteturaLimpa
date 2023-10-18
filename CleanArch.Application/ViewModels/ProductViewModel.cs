@@ -10,20 +10,9 @@ namespace CleanArch.Application.ViewModels
 {
     public class ProductViewModel
     {
-        public int Id { get; set; }
-        /*[Required(ErrorMessage ="The name is required")]
-        [MinLength(3)]
-        [MaxLength(50)]
-        [DisplayName("Name")]*/
-        public string Name { get; set; }
-        /*[Required(ErrorMessage = "The description is required")]
-        [MinLength(5)]
-        [MaxLength(200)]
-        [DisplayName("Description")]*/
-        public string Description { get; set; }
-        /*[Required(ErrorMessage = "The Price is required")]
-        [Range(0.1,9999.99)]
-        [DisplayName("Description")]*/
+        public int Id { get; set; }        
+        public string Name { get; set; }       
+        public string Description { get; set; }        
         public decimal Price { get; set; }
     }
 }

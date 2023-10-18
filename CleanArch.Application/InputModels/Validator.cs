@@ -3,9 +3,9 @@ using FluentValidation;
 
 namespace CleanArch.Application.InputModes
 {
-    public class Validators : AbstractValidator<ProductViewModel>
+    public class Validator : AbstractValidator<ProductViewModel>
     {
-        public Validators()
+        public Validator()
         {
             RuleFor(x => x.Name).NotEmpty()
                 .WithMessage("O nome é obrigatório")

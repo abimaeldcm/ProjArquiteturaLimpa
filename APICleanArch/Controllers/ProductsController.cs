@@ -1,6 +1,7 @@
 ﻿using CleanArch.Application.Interfaces;
 using CleanArch.Application.ViewModels;
 using FluentValidation;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
@@ -23,6 +24,8 @@ namespace Sistema_escolar.Controllers
         }
 
         [HttpGet]
+        [Route ("Authenticated")]
+        [Authorize]
         public async Task<ActionResult<IEnumerable<ProductViewModel>>> GetAll()
         {
             var products = await _productService.GetProducts();
@@ -60,6 +63,11 @@ namespace Sistema_escolar.Controllers
         {
             try
             {
+                var validationResult = _productValidator.Validate(productDTO);
+                if (!validationResult.IsValid)
+                {
+                    return BadRequest(validationResult.Errors);
+                }
                 _productService.Update(productDTO);
                 return Ok("Produto alterado com suceso.");
             }
