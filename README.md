@@ -30,5 +30,5 @@ Este projeto é uma API .NET desenvolvida para gerenciar produtos em um mercado.
 1. Clone o repositório:
 
    ```shell
-   git clone https://github.com/seu-usuario/seu-projeto.git
+   git clone https://github.com/abimaeldcm/ProjArquiteturaLimpa.git
    cd seu-projeto
