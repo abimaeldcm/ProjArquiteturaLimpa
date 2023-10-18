@@ -6,8 +6,6 @@ using Microsoft.Extensions.Hosting;
 using Microsoft.OpenApi.Models;
 using CleanArch.Infra.IoC;
 using APICleanArch.MappingConfig;
-using CleanArch.Domain.Interfaces;
-using CleanArch.Infra.Data.Repositories;
 
 namespace APICleanArch
 {
