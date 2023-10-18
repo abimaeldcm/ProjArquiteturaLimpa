@@ -24,7 +24,6 @@ namespace Sistema_escolar.Controllers
         }
 
         [HttpGet]
-        [Route ("Authenticated")]
         [Authorize]
         public async Task<ActionResult<IEnumerable<ProductViewModel>>> GetAll()
         {
@@ -40,6 +39,7 @@ namespace Sistema_escolar.Controllers
             return Ok(produto);
         }
         [HttpPost]
+        [Authorize(Roles = "manager")]
         public ActionResult<ProductViewModel> Adicionar([FromBody] ProductViewModel productDTO)
         {
             try
