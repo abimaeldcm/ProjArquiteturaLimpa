@@ -6,6 +6,10 @@ using Microsoft.Extensions.Hosting;
 using Microsoft.OpenApi.Models;
 using CleanArch.Infra.IoC;
 using APICleanArch.MappingConfig;
+using System.Reflection;
+using System.IO;
+using System;
+using Microsoft.Extensions.Options;
 
 namespace APICleanArch
 {
@@ -27,6 +31,10 @@ namespace APICleanArch
             services.AddAutoMapperConfiguration();
             services.AddSwaggerGen(c =>
             {
+                var xmlFile = $"{Assembly.GetEntryAssembly().GetName().Name}.xml";
+                var xmlPath = Path.Combine(AppContext.BaseDirectory, xmlFile) ;
+                c.IncludeXmlComments(xmlPath);
+
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "APICleanArch", Version = "v1" });
                 var securityScheme = new OpenApiSecurityScheme
                 {

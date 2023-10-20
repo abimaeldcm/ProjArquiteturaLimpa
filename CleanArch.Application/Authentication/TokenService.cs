@@ -9,7 +9,7 @@ namespace CleanArch.Application.Authentication
 {
     public static class TokenService
     {
-        public static string GenerateToken(User user)
+        public static string GenerateToken(UserMkt user)
         {
             var tokenHandler = new JwtSecurityTokenHandler();
             var key = Encoding.ASCII.GetBytes(Settings.Secret);

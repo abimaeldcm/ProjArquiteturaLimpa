@@ -1,6 +1,6 @@
 ﻿namespace CleanArch.Domain.Entities
 {
-    public class User
+    public class UserMkt
     {
         public int Id { get; set; }
         public string Username { get; set; }

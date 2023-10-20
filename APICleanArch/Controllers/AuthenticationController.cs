@@ -1,6 +1,6 @@
 ﻿using CleanArch.Application.Authentication;
+using CleanArch.Application.Interfaces;
 using CleanArch.Domain.Entities;
-using CleanArch.Infra.Data.Repositories;
 using Microsoft.AspNetCore.Mvc;
 using System.Threading.Tasks;
 
@@ -10,13 +10,24 @@ namespace APICleanArch.Controllers
     [Route("[controller]")]
     public class AuthenticationController : Controller
     {
-        [HttpPost]
-        [Route("login")]
-        public async Task<ActionResult<dynamic>> Authenticate([FromBody] User model)
-        {
-            var user = UserRepository.Get(model.Username, model.Password);
+        private readonly IUserMktService _userMktService;
 
-            if (user == null) return NotFound(new { message = "User or password invalid" });
+        public AuthenticationController(IUserMktService userMktService)
+        {
+            _userMktService = userMktService;
+        }
+
+        [HttpPost]
+        public async Task<ActionResult<dynamic>> Authenticate([FromBody] UserMkt model)
+        {
+            var user = await _userMktService.GetById(model.Id);
+
+            if (user == null) return NotFound(new { message = "User not found" });
+
+            if (user.Username != model.Username || user.Password != model.Password)
+            {
+                return BadRequest((new { message = "User or password invalid" }));
+            }
 
             var token = TokenService.GenerateToken(user);
 

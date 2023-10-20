@@ -13,11 +13,13 @@ namespace CleanArch.Infra.Data.Context
 
         }
         public DbSet<Product> Products { get; set; }
+        public DbSet<UserMkt> UserMkts { get; set; }
 
         protected override void OnModelCreating(ModelBuilder builder)
         {
             base.OnModelCreating(builder);
             builder.ApplyConfiguration(new ProductConfiguration());
+            builder.ApplyConfiguration(new UserConfiguration());
         }
     }
 }

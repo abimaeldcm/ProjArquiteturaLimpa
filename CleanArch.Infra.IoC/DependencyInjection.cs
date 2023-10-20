@@ -33,6 +33,8 @@ namespace CleanArch.Infra.IoC
 
             services.AddScoped<IProductRepository, ProductRepository>();
             services.AddScoped<IProductService, ProductService>();
+            services.AddScoped<IUserMktRepository, UserMktRepository>();
+            services.AddScoped<IUserMktService, UserMktService>();
             services.AddScoped<IValidator<ProductViewModel>, Validator>();
 
             //AuthenticationJwt
