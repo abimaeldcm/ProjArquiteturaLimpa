@@ -10,6 +10,8 @@ using System.Reflection;
 using System.IO;
 using System;
 using Microsoft.Extensions.Options;
+using Microsoft.OpenApi.Interfaces;
+using System.Collections.Generic;
 
 namespace APICleanArch
 {
@@ -32,10 +34,27 @@ namespace APICleanArch
             services.AddSwaggerGen(c =>
             {
                 var xmlFile = $"{Assembly.GetEntryAssembly().GetName().Name}.xml";
-                var xmlPath = Path.Combine(AppContext.BaseDirectory, xmlFile) ;
+                var xmlPath = Path.Combine(AppContext.BaseDirectory, xmlFile);
                 c.IncludeXmlComments(xmlPath);
 
-                c.SwaggerDoc("v1", new OpenApiInfo { Title = "APICleanArch", Version = "v1" });
+                c.SwaggerDoc("v1", new OpenApiInfo
+                {
+                    Title = "API Clean Arch",
+                    Version = "v1",
+                    Description = "Este projeto é uma API .NET desenvolvida para gerenciar produtos em um mercado. A aplicação oferece operações CRUD (Criar, Ler, Atualizar, Excluir) para manipular os produtos no banco de dados. A arquitetura Clean Architecture é usada para garantir uma separação clara de responsabilidades, incluindo camadas de Aplicação, Domínio, Dados e IoC. O código segue princípios de Clean Code para manutenção e legibilidade.",
+                    Contact = new OpenApiContact
+                    {
+                        Name = "Repositório no GitHub",
+                        Url = new Uri("https://github.com/abimaeldcm"),
+                        Email = "abimaelmens@hotmail.com",
+                    },
+                    License = new OpenApiLicense
+                    {
+                        Name = "Linkedin",
+                        Url = new Uri("https://www.linkedin.com/in/abimaelmends/")
+                    }
+                }
+                ); 
                 var securityScheme = new OpenApiSecurityScheme
                 {
                     Name = "JWT Authentication",
@@ -46,7 +65,7 @@ namespace APICleanArch
                     BearerFormat = "JWT"
                 };
 
-                c.AddSecurityDefinition("Bearer", securityScheme);
+        c.AddSecurityDefinition("Bearer", securityScheme);
 
                 var securityRequirement = new OpenApiSecurityRequirement
                 {
@@ -59,31 +78,31 @@ namespace APICleanArch
                     }
                 };
 
-                c.AddSecurityRequirement(securityRequirement);
+        c.AddSecurityRequirement(securityRequirement);
             });
         }
 
-        // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-        public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
-        {
-            if (env.IsDevelopment())
-            {
-                app.UseDeveloperExceptionPage();
-                app.UseSwagger();
-                app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "APICleanArch v1"));
-            }
+// This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
+public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
+{
+    if (env.IsDevelopment())
+    {
+        app.UseDeveloperExceptionPage();
+        app.UseSwagger();
+        app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "APICleanArch v1"));
+    }
 
-            app.UseHttpsRedirection();
+    app.UseHttpsRedirection();
 
-            app.UseRouting();
+    app.UseRouting();
 
-            app.UseAuthentication();
-            app.UseAuthorization();
+    app.UseAuthentication();
+    app.UseAuthorization();
 
-            app.UseEndpoints(endpoints =>
-            {
-                endpoints.MapControllers();
-            });
-        }
+    app.UseEndpoints(endpoints =>
+    {
+        endpoints.MapControllers();
+    });
+}
     }
 }

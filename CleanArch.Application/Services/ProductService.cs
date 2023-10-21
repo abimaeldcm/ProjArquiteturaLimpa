@@ -3,6 +3,7 @@ using CleanArch.Application.Interfaces;
 using CleanArch.Application.ViewModels;
 using CleanArch.Domain.Entities;
 using CleanArch.Domain.Interfaces;
+using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
@@ -20,8 +21,15 @@ namespace CleanArch.Application.Services
         }
         public async Task<IEnumerable<ProductViewModel>> GetProducts()
         {
-            var Products = await _repository.GetProducts();
-            return _mapper.Map<IEnumerable<ProductViewModel>>(Products);
+            try
+            {
+                var Products = await _repository.GetProducts();
+                return _mapper.Map<IEnumerable<ProductViewModel>>(Products);
+            }
+            catch (Exception erro)
+            {
+                throw new Exception(erro.Message);
+            }
         }
         public ProductViewModel GetById(int? id)
         {

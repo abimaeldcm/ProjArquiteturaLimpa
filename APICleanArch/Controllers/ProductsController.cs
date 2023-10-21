@@ -1,6 +1,5 @@
 ﻿using CleanArch.Application.Interfaces;
 using CleanArch.Application.ViewModels;
-using CleanArch.Domain.Entities;
 using FluentValidation;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
@@ -61,8 +60,8 @@ namespace Sistema_escolar.Controllers
         /// Buscar produto por Id
         /// </summary>
         /// <remarks>
-        /// Ao enviar o Id do produto desejado o sistema retornará o produto.
-        /// </remarks>
+        /// Ao enviar o Id do produto desejado o sistema retornará o produto.        /// 
+        /// </remarks>        /// 
         /// <param name="id">"Id do item"</param>
         /// <returns></returns>
         /// <response code="200">Produtos localizado com sucesso</response>
@@ -86,9 +85,18 @@ namespace Sistema_escolar.Controllers
         /// </summary>
         /// <remarks>
         /// Ao adicionar as informações, um novo produto será adicionado ao Banco de Dados. 
+        /// 
         /// Obs: Não é necessário preencher o campo "id", pois ele é gerado automaticamente.
+        /// 
+        /// Exemplo:
+        ///
+        ///     {
+        ///         "name": "Caneta",
+        ///         "description": "Caneta esferográfica azul",
+        ///         "price": 2.50
+        ///     }
         /// </remarks>
-        /// <param name="productDTO">"Produto a ser adicionado"</param>
+        /// <param name="productDTO">"Produto a ser adicionado"</param>        /// 
         /// <returns></returns>
         /// <response code="200">Produto adicioado com sucesso</response>
         /// <response code="400">Erro de validação  </response>
@@ -114,7 +122,6 @@ namespace Sistema_escolar.Controllers
             }
             catch (Exception erro)
             {
-
                 return BadRequest(new Exception("Não foi possivel adicionar o produto: " + erro.Message));
             }
         }
@@ -124,6 +131,15 @@ namespace Sistema_escolar.Controllers
         /// </summary>
         /// <remarks>
         /// Ao adicionar as informações, será retornado um produto caso ele esteja no Banco de Dados. 
+        /// 
+        /// Exemplo:
+        ///
+        ///     {
+        ///         "id": 15,
+        ///         "name": "Caneta",
+        ///         "description": "Caneta esferográfica azul",
+        ///         "price": 2.50
+        ///     }
         /// </remarks>
         /// <param name="productDTO">"Produto a ser editado"</param>
         /// <returns></returns>
@@ -137,7 +153,7 @@ namespace Sistema_escolar.Controllers
         [ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status500InternalServerError)]
         [HttpPut]
         [Authorize(Roles = "manager")]
-        public ActionResult<dynamic> Editar([FromBody] ProductViewModel productDTO)
+        public ActionResult<ProductViewModel> Editar([FromBody] ProductViewModel productDTO)
         {
             try
             {
@@ -146,12 +162,13 @@ namespace Sistema_escolar.Controllers
                 {
                     return BadRequest(validationResult.Errors);
                 }
-                _productService.Update(productDTO);
-                return Ok(new
+                if (_productService.GetById(productDTO.Id) == null)
                 {
-                    message = "Produto alterado com sucesso.",
-                    productDTO                    
-                });
+                    throw new Exception("Produto não existe no Banco de Dados");
+                }
+                
+                _productService.Update(productDTO);
+                return Ok(productDTO);
             }
             catch (Exception erro)
             {
