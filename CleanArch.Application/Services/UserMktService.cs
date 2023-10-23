@@ -1,41 +1,26 @@
-﻿using AutoMapper;
-using CleanArch.Application.Interfaces;
-using CleanArch.Application.ViewModels;
+﻿using CleanArch.Application.Interfaces;
 using CleanArch.Domain.Entities;
 using CleanArch.Domain.Interfaces;
+using System;
 using System.Collections.Generic;
+using System.Linq;
+using System.Text;
 using System.Threading.Tasks;
 
 namespace CleanArch.Application.Services
 {
     public class UserMktService : IUserMktService
     {
-        protected readonly IUserMktRepository _userMktRepository;
+        private readonly IUserMktRepository _userRepository;
 
-        public UserMktService(IUserMktRepository userMktRepository)
+        public UserMktService(IUserMktRepository userRepository)
         {
-            _userMktRepository = userMktRepository;
+            _userRepository = userRepository;
         }
-        public async Task<IEnumerable<UserMkt>> GetUsersMkt()
+
+        public async Task<UserMkt> GetEmployeeByIdAsync(int? id)
         {
-            return await _userMktRepository.GetUsers();
-        }
-        public async Task<UserMkt> GetById(int? id)
-        {
-            return await _userMktRepository.GetById(id);
-        }
-        public async Task<UserMkt> Add(UserMkt user)
-        {
-            return await _userMktRepository.Add(user);             
-        }
-        public async Task<UserMkt> Update(UserMkt user)
-        {
-            return await _userMktRepository.Update(user);
-        }
-        public async void Delete(int id)
-        {
-            var user = await GetById(id);
-            _userMktRepository.Delete(user);
+           return await _userRepository.GetById(id);
         }
     }
 }

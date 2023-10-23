@@ -117,8 +117,8 @@ namespace Sistema_escolar.Controllers
                 {
                     return BadRequest(validationResult.Errors);
                 }
-                _productService.Add(productDTO);
-                return Ok(productDTO);
+                var produtReturn = _productService.Add(productDTO);
+                return Ok(produtReturn);
             }
             catch (Exception erro)
             {

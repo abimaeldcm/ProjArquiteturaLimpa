@@ -9,9 +9,6 @@ using APICleanArch.MappingConfig;
 using System.Reflection;
 using System.IO;
 using System;
-using Microsoft.Extensions.Options;
-using Microsoft.OpenApi.Interfaces;
-using System.Collections.Generic;
 
 namespace APICleanArch
 {
@@ -44,7 +41,7 @@ namespace APICleanArch
                     Description = "Este projeto é uma API .NET desenvolvida para gerenciar produtos em um mercado. A aplicação oferece operações CRUD (Criar, Ler, Atualizar, Excluir) para manipular os produtos no banco de dados. A arquitetura Clean Architecture é usada para garantir uma separação clara de responsabilidades, incluindo camadas de Aplicação, Domínio, Dados e IoC. O código segue princípios de Clean Code para manutenção e legibilidade.",
                     Contact = new OpenApiContact
                     {
-                        Name = "Repositório no GitHub",
+                        Name = "Abimael Mendes",
                         Url = new Uri("https://github.com/abimaeldcm"),
                         Email = "abimaelmens@hotmail.com",
                     },

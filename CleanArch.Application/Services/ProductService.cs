@@ -37,10 +37,11 @@ namespace CleanArch.Application.Services
             Product product = _repository.GetById(id);
             return _mapper.Map<ProductViewModel>(product);
         }
-        public void Add(ProductViewModel product)
+        public ProductViewModel Add(ProductViewModel product)
         {
             Product productMap = _mapper.Map<Product>(product);
-            _repository.Add(productMap);
+            var productReturn = _repository.Add(productMap);
+            return _mapper.Map<ProductViewModel>(productReturn);
         }
         public void Update(ProductViewModel product)
         {

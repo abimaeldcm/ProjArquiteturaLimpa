@@ -8,7 +8,7 @@ namespace CleanArch.Application.Interfaces
     {
         Task<IEnumerable<ProductViewModel>> GetProducts();
         ProductViewModel GetById(int? id);
-        void Add(ProductViewModel product);
+        ProductViewModel Add(ProductViewModel product);
         void Update(ProductViewModel product);
         void Delete(int id);
     }

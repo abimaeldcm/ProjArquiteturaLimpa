@@ -1,7 +1,12 @@
 ﻿using CleanArch.Application.Authentication;
 using CleanArch.Application.Interfaces;
+using CleanArch.Application.Services;
+using CleanArch.Application.ViewModels;
 using CleanArch.Domain.Entities;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using System;
 using System.Threading.Tasks;
 
 namespace APICleanArch.Controllers
@@ -18,11 +23,12 @@ namespace APICleanArch.Controllers
         }
 
         [HttpPost]
+        [Route("Authentication")]
         public async Task<ActionResult<dynamic>> Authenticate([FromBody] UserMkt model)
         {
-            var user = await _userMktService.GetById(model.Id);
+            var user = await _userMktService.GetEmployeeByIdAsync(model.Id);
 
-            if (user == null) return NotFound(new { message = "User not found" });
+            if (user == null) return NotFound("User not found");
 
             if (user.Username != model.Username || user.Password != model.Password)
             {
@@ -38,6 +44,6 @@ namespace APICleanArch.Controllers
                 user = user,
                 token = token
             };
-        }
+        }    
     }
 }
