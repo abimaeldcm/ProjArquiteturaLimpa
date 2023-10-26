@@ -14,6 +14,7 @@ using Microsoft.AspNetCore.Authentication.JwtBearer;
 using System.Text;
 using CleanArch.Application.Authentication;
 using Microsoft.IdentityModel.Tokens;
+using CleanArch.Domain.Entities;
 
 namespace CleanArch.Infra.IoC
 {
@@ -36,6 +37,7 @@ namespace CleanArch.Infra.IoC
             services.AddScoped<IUserMktRepository, UserMktRepository>();
             services.AddScoped<IUserMktService, UserMktService>();
             services.AddScoped<IValidator<ProductViewModel>, Validator>();
+            services.AddScoped<IValidator<UserMkt>, ValidatorUser>();
 
             //AuthenticationJwt
             var key = Encoding.ASCII.GetBytes(Settings.Secret);

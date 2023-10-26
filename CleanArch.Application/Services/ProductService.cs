@@ -50,7 +50,7 @@ namespace CleanArch.Application.Services
         }
         public void Delete(int id)
         {
-            Product product = _repository.GetById(id);
+            Product product = _repository.GetById(id);            
             _repository.Delete(product);
         }
     }

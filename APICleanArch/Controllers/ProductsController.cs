@@ -29,8 +29,6 @@ namespace Sistema_escolar.Controllers
         /// <remarks>
         /// Busca todos os produtos cadastrados no Banco de Dados
         /// </remarks>
-        /// <param name="">""</param>
-        /// <returns></returns>
         /// <response code="200">Produtos carregados com sucesso</response>
         /// <response code="400">Erro de validação  </response>
         /// <response code="401">Usuário não autorizado  </response>
@@ -51,10 +49,8 @@ namespace Sistema_escolar.Controllers
             }
             catch (Exception ex)
             {
-
                 return BadRequest(ex.Message);
             }
-
         }
         /// <summary>
         /// Buscar produto por Id
@@ -76,8 +72,16 @@ namespace Sistema_escolar.Controllers
         [Authorize]
         public ActionResult<ProductViewModel> BuscarPorId(int id)
         {
-            ProductViewModel produto = _productService.GetById(id);
-            return Ok(produto);
+            try
+            {
+                ProductViewModel produto = _productService.GetById(id);
+                return Ok(produto);
+            }
+            catch (Exception erro)
+            {
+
+                throw new Exception(erro.Message);
+            }
         }
 
         /// <summary>
@@ -96,9 +100,9 @@ namespace Sistema_escolar.Controllers
         ///         "price": 2.50
         ///     }
         /// </remarks>
-        /// <param name="productDTO">"Produto a ser adicionado"</param>        /// 
+        /// <param name="productDTO">"Produto a ser adicionado"</param>      
         /// <returns></returns>
-        /// <response code="200">Produto adicioado com sucesso</response>
+        /// <response code="200">Produto adicionado com sucesso</response>
         /// <response code="400">Erro de validação  </response>
         /// <response code="401">Usuário não autorizado. Apenas Manager podem realizar a ação.  </response>
         /// <response code="500">Erro no banco</response>
@@ -166,7 +170,7 @@ namespace Sistema_escolar.Controllers
                 {
                     throw new Exception("Produto não existe no Banco de Dados");
                 }
-                
+
                 _productService.Update(productDTO);
                 return Ok(productDTO);
             }
@@ -197,14 +201,15 @@ namespace Sistema_escolar.Controllers
         {
             try
             {
+                if (id <= 0) throw new ArgumentNullException();
+
                 _productService.Delete(id);
                 return Ok("Produto Deletado");
             }
             catch (Exception erro)
             {
-                return BadRequest(erro.Message);
+                throw new Exception(erro.Message);
             }
-            
         }
     }
 }
