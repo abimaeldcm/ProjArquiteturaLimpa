@@ -1,4 +1,6 @@
-﻿namespace CleanArch.Domain.Entities
+﻿using System.Text.Json.Serialization;
+
+namespace CleanArch.Domain.Entities
 {
     public class Product
     {

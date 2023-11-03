@@ -32,8 +32,7 @@ namespace CleanArch.Application.Services
             }
         }
         public ProductViewModel GetById(int? id)
-        {
-
+        {            
             Product product = _repository.GetById(id);
             return _mapper.Map<ProductViewModel>(product);
         }

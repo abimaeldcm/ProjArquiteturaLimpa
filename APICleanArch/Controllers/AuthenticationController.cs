@@ -38,7 +38,7 @@ namespace APICleanArch.Controllers
 
             if (user.Username != userMktAutentication.Username || user.Password != userMktAutentication.Password)
             {
-                return BadRequest((new { message = "User or password invalid" }));
+                return BadRequest("User or password invalid");
             }
 
             // Generate the access token and return

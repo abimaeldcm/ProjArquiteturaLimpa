@@ -56,7 +56,7 @@ namespace Sistema_escolar.Controllers
         /// Buscar produto por Id
         /// </summary>
         /// <remarks>
-        /// Ao enviar o Id do produto desejado o sistema retornará o produto.        /// 
+        /// Ao enviar o Id do produto desejado o sistema retornará o produto.         
         /// </remarks>        /// 
         /// <param name="id">"Id do item"</param>
         /// <returns></returns>
@@ -74,6 +74,7 @@ namespace Sistema_escolar.Controllers
         {
             try
             {
+                if (id <= 0) new Exception("Erro"); //BadRequest("Product number cannot be equal to 0 or negative");
                 ProductViewModel produto = _productService.GetById(id);
                 return Ok(produto);
             }

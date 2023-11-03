@@ -9,6 +9,7 @@ using APICleanArch.MappingConfig;
 using System.Reflection;
 using System.IO;
 using System;
+using System.Net.Http.Headers;
 
 namespace APICleanArch
 {
@@ -51,7 +52,7 @@ namespace APICleanArch
                         Url = new Uri("https://www.linkedin.com/in/abimaelmends/")
                     }
                 }
-                ); 
+                );
                 var securityScheme = new OpenApiSecurityScheme
                 {
                     Name = "JWT Authentication",
@@ -62,7 +63,7 @@ namespace APICleanArch
                     BearerFormat = "JWT"
                 };
 
-        c.AddSecurityDefinition("Bearer", securityScheme);
+                c.AddSecurityDefinition("Bearer", securityScheme);
 
                 var securityRequirement = new OpenApiSecurityRequirement
                 {
@@ -75,31 +76,31 @@ namespace APICleanArch
                     }
                 };
 
-        c.AddSecurityRequirement(securityRequirement);
-            });
+                c.AddSecurityRequirement(securityRequirement);
+            });            
         }
 
-// This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
-{
-    if (env.IsDevelopment())
-    {
-        app.UseDeveloperExceptionPage();
-        app.UseSwagger();
-        app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "APICleanArch v1"));
-    }
+        // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
+        public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
+        {
+            if (env.IsDevelopment())
+            {
+                app.UseDeveloperExceptionPage();
+                app.UseSwagger();
+                app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "APICleanArch v1"));
+            }
 
-    app.UseHttpsRedirection();
+            app.UseHttpsRedirection();
 
-    app.UseRouting();
+            app.UseRouting();
 
-    app.UseAuthentication();
-    app.UseAuthorization();
+            app.UseAuthentication();
+            app.UseAuthorization();
 
-    app.UseEndpoints(endpoints =>
-    {
-        endpoints.MapControllers();
-    });
-}
+            app.UseEndpoints(endpoints =>
+            {
+                endpoints.MapControllers();
+            });
+        }
     }
 }
