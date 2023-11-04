@@ -12,8 +12,9 @@ using System.Collections.Generic;
 
 namespace CleanArch.Testes
 {
-    public class CleanArchTestesGenerateToken
+    public class CleanArchGenerateTokenTests
     {
+        //Criar Token
         [Fact]
         public void CreateTokenTest()
         {
@@ -29,8 +30,9 @@ namespace CleanArch.Testes
             Assert.NotNull(token);
             Assert.NotEmpty(token);
         }
+        //Autenticação completa do usuário
         [Fact]
-        public async void AuthenticationUserTeste()
+        public async void AuthenticationUserTest()
         {
             var userMktServiceMock = new Mock<IUserMktService>();
             var userValidatorMock = new Mock<IValidator<UserMkt>>();
@@ -84,6 +86,7 @@ namespace CleanArch.Testes
 
             Assert.IsType<BadRequestObjectResult>(result.Result);
         }
+        //Lança um erro ao constatá que o usuário não existe no banco.
         [Fact]
         public async void CheckIfUserExistsInBank()
         {
@@ -100,7 +103,7 @@ namespace CleanArch.Testes
                 Password = "testpassword"
             };
 
-            userMktServiceMock.Setup(get => 
+            userMktServiceMock.Setup(get =>
                  get.GetEmployeeByIdAsync(userMktAutentication.Id))
                 .Returns(Task.FromResult<UserMkt>(null));
 
