@@ -25,13 +25,13 @@ namespace CleanArch.Infra.Data.Repositories
                 var Product = _context.Products.SingleOrDefault(x => x.Id == id);
 
                 return Product == default ?
-                    throw new ObjectNotFoundException($"Entity with ID {id} was not found.")
+                    throw new Exception($"Entity with ID {id} was not found.")
                     : Product;
             }
             catch (Exception erro)
             {
 
-                throw new Exception("An error occurred while searching for the desired products." + erro.Message);
+                throw new ObjectNotFoundException("An error occurred while searching for the desired products." + erro.Message);
             }
         }
 

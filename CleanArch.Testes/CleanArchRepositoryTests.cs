@@ -5,6 +5,11 @@ using Microsoft.EntityFrameworkCore;
 using System.Threading.Tasks;
 using Xunit;
 using System.Collections.Generic;
+using System.Data.Entity.Core;
+using System;
+using Moq;
+using CleanArch.Domain.Interfaces;
+using AutoMapper.Configuration.Annotations;
 
 namespace CleanArch.Testes
 {
@@ -59,7 +64,7 @@ namespace CleanArch.Testes
             var options = new DbContextOptionsBuilder<ApplicationDbContext>()
                 .UseInMemoryDatabase(databaseName: "GetProducts_ReturnDatabaseIsEmpty")
                 .Options;
-                 
+
             using (var context = new ApplicationDbContext(options))
             {
                 var ProdctRep = new ProductRepository(context);
@@ -68,7 +73,7 @@ namespace CleanArch.Testes
             };
         }
         [Fact]
-        public void GetById_ValidId_ReturnsProduct()
+        public void GetById_ValidId_ReturnProduct()
         {
             // Arrange
             var options = new DbContextOptionsBuilder<ApplicationDbContext>()
@@ -97,9 +102,34 @@ namespace CleanArch.Testes
             }
         }
         [Fact]
-        public async Task GetProducts_NoProducts_ThrowsException()
+        public void GetById_InvalidId_ObjectNotFoundException()
         {
             // Arrange
+            var options = new DbContextOptionsBuilder<ApplicationDbContext>()
+                .UseInMemoryDatabase(databaseName: "GetById_InvalidId_ObjectNotFoundException")
+                .Options;
+
+            using (var context = new ApplicationDbContext(options))
+            {
+                var product = new Product
+                { Id = 1, Name = "ProductTest1", Description = "TestingProduct", Price = 12.00M };
+                context.Products.Add(product);
+                context.SaveChanges();
+            }
+
+            using (var context = new ApplicationDbContext(options))
+            {
+                var repository = new ProductRepository(context);
+
+                // Assert
+                Assert.Throws<ObjectNotFoundException>(() => repository.GetById(2));
+
+            }
+        }
+        [Fact]
+        public async Task GetProducts_NoProducts_ThrowsException()
+        {
+            //Arrange
             var options = new DbContextOptionsBuilder<ApplicationDbContext>()
                 .UseInMemoryDatabase(databaseName: "GetProducts_NoProducts_ThrowsException")
                 .Options;
@@ -109,13 +139,50 @@ namespace CleanArch.Testes
                 context.Products.RemoveRange(context.Products);
                 context.SaveChanges();
             }
-
+            //Act 
             using (var context = new ApplicationDbContext(options))
             {
                 var repository = new ProductRepository(context);
 
-                // Act and Assert
-                await Assert.ThrowsAsync<DbUpdateException>(async () => await repository.GetProducts());
+                // Assert
+                await Assert.ThrowsAsync<DbUpdateException>(
+                    async () => await repository.GetProducts());
+            }
+        }
+        [Fact]
+        public void AddProducts_ReturnProduct()
+        {
+            var options = new DbContextOptionsBuilder<ApplicationDbContext>()
+                .UseInMemoryDatabase(databaseName: "AddProducts_ReturnProduct")
+                .Options;
+
+            using (var context = new ApplicationDbContext(options))
+            {
+                var ProdctRp = new ProductRepository(context);
+
+                var ProductReturn = ProdctRp.Add(
+                    new Product { Id = 1, Name = "ProductTest1", Description = "TestingProduct", Price = 12.00M });
+
+                Assert.NotNull(ProductReturn);
+                Assert.IsNotType<DbUpdateException>(ProductReturn);
+                Assert.IsType<Product>(ProductReturn);
+                Assert.True(ProductReturn.Id == 1 || ProductReturn.Name == "ProductTest1");
+            };
+        }
+        [Fact(Skip = "Ainda não consegui retornar um erro")]
+        public void AddProducts_ThrowsException()
+        {
+            //Arrange
+            var options = new DbContextOptionsBuilder<ApplicationDbContext>()
+                .UseInMemoryDatabase(databaseName: "AddProducts_ThrowsException")
+                .Options;
+
+            //Act 
+            using (var context = new ApplicationDbContext(options))
+            {
+                var product = new ProductRepository(context);
+
+                Assert.Throws<DbUpdateException>(() => product.Add(new Product()));
             }
         }
     }

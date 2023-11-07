@@ -14,9 +14,10 @@ namespace CleanArch.Testes
 {
     public class CleanArchGenerateTokenTests
     {
+
         //Criar Token
         [Fact]
-        public void CreateTokenTest()
+        public void CreateToken_Jwt_String()
         {
             string token = TokenService.GenerateToken(new UserMkt()
             {
@@ -32,7 +33,7 @@ namespace CleanArch.Testes
         }
         //Autenticação completa do usuário
         [Fact]
-        public async void AuthenticationUserTest()
+        public async void AuthenticationUser_Sucess()
         {
             var userMktServiceMock = new Mock<IUserMktService>();
             var userValidatorMock = new Mock<IValidator<UserMkt>>();
@@ -63,7 +64,7 @@ namespace CleanArch.Testes
         }
         //Teste para verficar o Validator: Gera uma objeto inválido e captura o erro que foi retornado.
         [Fact]
-        public async void AuthenticationUserExceptionValidation()
+        public async void AuthenticationUser_ErroValidationModel_ExceptionValidation()
         {
             var userMktServiceMock = new Mock<IUserMktService>();
             var userValidatorMock = new Mock<IValidator<UserMkt>>();
@@ -88,7 +89,7 @@ namespace CleanArch.Testes
         }
         //Lança um erro ao constatá que o usuário não existe no banco.
         [Fact]
-        public async void CheckIfUserExistsInBank()
+        public async void AuthenticationUser_CheckIfUserExistsInBank_NotFoundObjectResult()
         {
             var userMktServiceMock = new Mock<IUserMktService>();
             var userValidatorMock = new Mock<IValidator<UserMkt>>();
