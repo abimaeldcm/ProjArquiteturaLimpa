@@ -10,6 +10,7 @@ Este projeto é uma API .NET desenvolvida para gerenciar produtos em um mercado.
 - Mapeamento de Objetos: AutoMapper
 - Validação de Dados: Fluent Validation
 - Autenticação: JWT Bearer
+- Testes de Unidade: xUnit
 - Arquitetura: Clean Architecture (Camadas Application, Domain, Data, IoC)
 - Princípios: Clean Code
 
