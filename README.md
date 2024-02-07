@@ -27,11 +27,3 @@ Este projeto é uma API .NET desenvolvida para gerenciar produtos em um mercado.
 
 - [.NET Core SDK](https://dotnet.microsoft.com/download)
 - SQL Server instalado e configurado
-
-## Como Executar o Projeto
-
-1. Clone o repositório:
-
-   ```shell
-   git clone https://github.com/abimaeldcm/ProjArquiteturaLimpa.git
-   cd seu-projeto
