@@ -1,6 +1,6 @@
 # API .NET de Gerenciamento de Produtos
 
-# Clique na imagem abaixo para ver o vídeo
+## Clique na imagem abaixo para ver o vídeo
 [![Assista ao Vídeo de Demonstração](https://img.youtube.com/vi/OQWDdus_Avc/0.jpg)](https://www.youtube.com/watch?v=OQWDdus_Avc)
 
 Este projeto é uma API .NET desenvolvida para gerenciar produtos em um mercado. A aplicação oferece operações CRUD (Create, Read, Update, Delete) para manipular os produtos no banco de dados. A arquitetura Clean Architecture é usada para garantir uma separação clara de responsabilidades, incluindo camadas Application, Domain, Data e IoC. O código segue princípios de Clean Code para manutenção e legibilidade.
